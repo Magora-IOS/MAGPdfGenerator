@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'MAGPdfGenerator_Example' do
+  pod 'MAGPdfGenerator', :path => '../'
+
+  target 'MAGPdfGenerator_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
