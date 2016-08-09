@@ -1,0 +1,30 @@
+PODS:
+  - FLKAutoLayout (0.2.1)
+  - MAGPdfGenerator (0.1.0)
+  - Masonry (1.0.1)
+  - ORStackView (3.0.1):
+    - FLKAutoLayout (~> 0.2)
+  - ZXingObjC (3.1.0):
+    - ZXingObjC/All (= 3.1.0)
+  - ZXingObjC/All (3.1.0)
+
+DEPENDENCIES:
+  - MAGPdfGenerator (from `../`)
+  - Masonry (~> 1.0)
+  - ORStackView (~> 3.0)
+  - ZXingObjC (~> 3.1)
+
+EXTERNAL SOURCES:
+  MAGPdfGenerator:
+    :path: ../
+
+SPEC CHECKSUMS:
+  FLKAutoLayout: 9db6b30c2008d230da608e62c607b11c23b942e6
+  MAGPdfGenerator: 154f231777df943e6ef18682de9e525b430b39ab
+  Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
+  ORStackView: a1bb52748cd0ae29891c140baf22ff8972fb363c
+  ZXingObjC: bf15b3814f7a105b6d99f47da2333c93a063650a
+
+PODFILE CHECKSUM: ae11988b18be9792467c56b59b7a954d87ac82c1
+
+COCOAPODS: 1.0.1
