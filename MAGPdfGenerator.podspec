@@ -1,42 +1,16 @@
-#
-# Be sure to run `pod lib lint MAGPdfGenerator.podspec' to ensure this is a
-# valid spec before submitting.
-#
-# Any lines starting with a # are optional, but their use is encouraged
-# To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
-#
-
 Pod::Spec.new do |s|
   s.name             = 'MAGPdfGenerator'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of MAGPdfGenerator.'
-
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
-
+  s.summary          = 'An utility to convert UIView to a PDF document.'
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+MAGPdfGenerator is an utility which provides the ability to convert UIView's representation to a PDF document. The UIView may be created from XIB file and use Autolayouts that makes a convenient way to draw the pdf's content.
                        DESC
-
-  s.homepage         = 'https://github.com/<GITHUB_USERNAME>/MAGPdfGenerator'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
+  s.homepage         = 'https://github.com/Magora-IOS/MAGPdfGenerator.git'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Konstantin Mamaev' => 'mamaev@magora-systems.com' }
-  s.source           = { :git => 'https://github.com/<GITHUB_USERNAME>/MAGPdfGenerator.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
-
+  s.source           = { :git => 'https://github.com/Magora-IOS/MAGPdfGenerator.git', :tag => s.version.to_s }
   s.ios.deployment_target = '8.0'
-
   s.source_files = 'MAGPdfGenerator/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'MAGPdfGenerator' => ['MAGPdfGenerator/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.public_header_files = 'MAGPdfGenerator/Classes/**/*.h'
+  s.frameworks = 'UIKit'
 end

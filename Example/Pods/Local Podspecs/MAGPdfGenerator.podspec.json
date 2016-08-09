@@ -1,0 +1,22 @@
+{
+  "name": "MAGPdfGenerator",
+  "version": "0.1.0",
+  "summary": "A short description of MAGPdfGenerator.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/<GITHUB_USERNAME>/MAGPdfGenerator",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Konstantin Mamaev": "mamaev@magora-systems.com"
+  },
+  "source": {
+    "git": "https://github.com/<GITHUB_USERNAME>/MAGPdfGenerator.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "MAGPdfGenerator/Classes/**/*"
+}

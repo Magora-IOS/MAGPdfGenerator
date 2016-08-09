@@ -1,0 +1,6 @@
+framework module MAGPdfGenerator {
+  umbrella header "MAGPdfGenerator-umbrella.h"
+
+  export *
+  module * { export * }
+}
