@@ -3,6 +3,6 @@
 
 @interface UIColor (MAGPdfGenerator)
 
-- (BOOL)isEqualToColor:(UIColor *)otherColor;
+- (BOOL)mag_isEqualToColor:(UIColor *)otherColor;
 
 @end

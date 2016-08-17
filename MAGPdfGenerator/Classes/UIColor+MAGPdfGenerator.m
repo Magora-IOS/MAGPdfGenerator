@@ -3,7 +3,7 @@
 
 @implementation UIColor (MAGPdfGenerator)
 
-- (BOOL)isEqualToColor:(UIColor *)otherColor {
+- (BOOL)mag_isEqualToColor:(UIColor *)otherColor {
     CGColorSpaceRef colorSpaceRGB = CGColorSpaceCreateDeviceRGB();
     
     UIColor *(^convertColorToRGBSpace)(UIColor *) = ^(UIColor *color) {

@@ -5,7 +5,6 @@
 
 // Utils
 #import "UIColor+MAGPdfGenerator.h"
-#import "UIView+MAGPdfGenerator.h"
 
 
 static CGSize const _defaultPageSize = (CGSize){612, 792};
@@ -78,10 +77,10 @@ static CGPoint const _defaultPageNumberPointToDraw = (CGPoint){580, 730};
     return [views sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
         UIView *view1 = (UIView *)obj1;
         UIView *view2 = (UIView *)obj2;
-        if (view1.lowestY < view2.lowestY) {
+        if (CGRectGetMaxY(view1.frame) < CGRectGetMaxY(view2.frame)) {
             return NSOrderedAscending;
         }
-        else if (view1.lowestY > view2.lowestY) {
+        else if (CGRectGetMaxY(view1.frame) > CGRectGetMaxY(view2.frame)) {
             return NSOrderedDescending;
         }
         else {
@@ -100,7 +99,7 @@ static CGPoint const _defaultPageNumberPointToDraw = (CGPoint){580, 730};
     if (!whiteColor) {
         whiteColor = [UIColor whiteColor];
     }
-    BOOL notWhite = ![view.backgroundColor isEqualToColor:whiteColor];
+    BOOL notWhite = ![view.backgroundColor mag_isEqualToColor:whiteColor];
     BOOL notStrollView = ![view isKindOfClass:[UIScrollView class]];
     
     if (notWhite && notStrollView) {

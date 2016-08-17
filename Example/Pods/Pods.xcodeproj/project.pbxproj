@@ -302,7 +302,6 @@
 		89AFA640B7784E97D4A8D57C3E2C0D92 /* ZXModulusPoly.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C57D5153AC1CBA3EED0D24FB2366D25 /* ZXModulusPoly.m */; };
 		8A1EDA6CF097892253BB8E1FA6227C28 /* ZXDimension.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB4DCE29FC9EF8BBD659E567461FCCF /* ZXDimension.m */; };
 		8A854912C2CA3CB71025866ACC3393F3 /* ZXBitArray.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5F8495F41BC58FBFE028C526D0B01E /* ZXBitArray.m */; };
-		8AA8123339839533CA7FA4D20DAC2BEF /* UIView+MAGPdfGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 2799653C1056B21DE4912BF534F58866 /* UIView+MAGPdfGenerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8C26A377AA0DE53FF8552BBFFF8BA735 /* ZXAI01320xDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = E095868D54A404708C3890158F4EB794 /* ZXAI01320xDecoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8C541E1830B31E5DC65D5C982725D994 /* ZXQRCodeMultiReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 76340DCF86502881831C441DFA2E2331 /* ZXQRCodeMultiReader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8C647C2DB33B8A3165DD5FCE00500721 /* ZXMaxiCodeDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0022CA4DE5A8D7D5999C8E335082AEEB /* ZXMaxiCodeDecoder.m */; };
@@ -447,7 +446,6 @@
 		D11F2C1C9F89043AE6690329039CF10D /* MASViewAttribute.h in Headers */ = {isa = PBXBuildFile; fileRef = 19DDCAB5A40905719656B93612F21303 /* MASViewAttribute.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D14E8701BF2BD8A81672596602A59D0A /* ZXAnyAIDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D249499F69B8FB9A7A3C88C28A95A3 /* ZXAnyAIDecoder.m */; };
 		D1774B08E56EC9693A0E6D153C242800 /* ZXCapture.h in Headers */ = {isa = PBXBuildFile; fileRef = 09FFE8A0DEBEE9C1E26E378850ECFA6F /* ZXCapture.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D1AD1349D2938C07F630163605854385 /* UIView+MAGPdfGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = DA791D857ADDB260236A770AAE7E76B8 /* UIView+MAGPdfGenerator.m */; };
 		D1B40190450E696E918234F40DFAF269 /* ZXRSSExpandedGeneralAppIdDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 63FD051733E2D881396F88ACB9DD0D17 /* ZXRSSExpandedGeneralAppIdDecoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D2BC45F118938574EE6A308424A38587 /* ZXDecodeHints.h in Headers */ = {isa = PBXBuildFile; fileRef = 4A20F2AC5D9B39CD7D2B3FD31C2654CD /* ZXDecodeHints.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D2E8B06EFA0DF9BF2FD7B9FE7E15F988 /* ZXQRCodeErrorCorrectionLevel.h in Headers */ = {isa = PBXBuildFile; fileRef = 69A6F3419E8FD2B41CFA03E96B19BC59 /* ZXQRCodeErrorCorrectionLevel.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -677,7 +675,6 @@
 		268140103554CCA60013C1E519A73E00 /* ZXAztecState.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXAztecState.h; path = ZXingObjC/aztec/encoder/ZXAztecState.h; sourceTree = "<group>"; };
 		26FA60B59EE7F41D2E98907154C0DD7F /* NSLayoutConstraint+MASDebugAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSLayoutConstraint+MASDebugAdditions.m"; path = "Masonry/NSLayoutConstraint+MASDebugAdditions.m"; sourceTree = "<group>"; };
 		27356EB79ABF2D6ECC8EB3257EDC2F35 /* ZXUPCEReader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXUPCEReader.h; path = ZXingObjC/oned/ZXUPCEReader.h; sourceTree = "<group>"; };
-		2799653C1056B21DE4912BF534F58866 /* UIView+MAGPdfGenerator.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UIView+MAGPdfGenerator.h"; sourceTree = "<group>"; };
 		28242431D386F418CA06C66E6D3C39AD /* ZXDataMatrixEdifactEncoder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXDataMatrixEdifactEncoder.h; path = ZXingObjC/datamatrix/encoder/ZXDataMatrixEdifactEncoder.h; sourceTree = "<group>"; };
 		2934012A42BDD8D68DCD3D2EF94A9AF9 /* ZXAddressBookAUResultParser.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXAddressBookAUResultParser.h; path = ZXingObjC/client/result/ZXAddressBookAUResultParser.h; sourceTree = "<group>"; };
 		297FCBB9149C727E717C179E5F399AFB /* ZXQRCodeWriter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZXQRCodeWriter.m; path = ZXingObjC/qrcode/ZXQRCodeWriter.m; sourceTree = "<group>"; };
@@ -1068,7 +1065,6 @@
 		D8739E2CABF74EDCDCC65FDAC67C67E5 /* ZXVEventResultParser.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZXVEventResultParser.m; path = ZXingObjC/client/result/ZXVEventResultParser.m; sourceTree = "<group>"; };
 		D9BF3F298E22AB29C2D07F5A93FE558A /* ZXAztecEncoder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXAztecEncoder.h; path = ZXingObjC/aztec/encoder/ZXAztecEncoder.h; sourceTree = "<group>"; };
 		DA6BF42EAB2DE553FBC7BDE6C152F627 /* ZXQRCodeFormatInformation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ZXQRCodeFormatInformation.m; path = ZXingObjC/qrcode/decoder/ZXQRCodeFormatInformation.m; sourceTree = "<group>"; };
-		DA791D857ADDB260236A770AAE7E76B8 /* UIView+MAGPdfGenerator.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UIView+MAGPdfGenerator.m"; sourceTree = "<group>"; };
 		DABBED06A9736A0F710550D933004F49 /* ZXAztecHighLevelEncoder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXAztecHighLevelEncoder.h; path = ZXingObjC/aztec/encoder/ZXAztecHighLevelEncoder.h; sourceTree = "<group>"; };
 		DB4FF1B106C998F1B8679DE490EB947A /* ZXReader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ZXReader.h; path = ZXingObjC/core/ZXReader.h; sourceTree = "<group>"; };
 		DBB90A8FAB74CE8AC03E635FD1205D36 /* UIView+FLKAutoLayoutPredicate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIView+FLKAutoLayoutPredicate.h"; path = "FLKAutoLayout/UIView+FLKAutoLayoutPredicate.h"; sourceTree = "<group>"; };
@@ -1954,8 +1950,6 @@
 				A72E1BC2131178B68BC537DDA7AC778F /* MAGPdfRenderer.m */,
 				117B1A600EEA399EE81734353CB3A240 /* UIColor+MAGPdfGenerator.h */,
 				3BBC3E19E93E5FB0690D2AC0E60E1A4B /* UIColor+MAGPdfGenerator.m */,
-				2799653C1056B21DE4912BF534F58866 /* UIView+MAGPdfGenerator.h */,
-				DA791D857ADDB260236A770AAE7E76B8 /* UIView+MAGPdfGenerator.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -2052,7 +2046,6 @@
 				EC2CDAAA2FA18253B26148CFA72E5BD7 /* MAGPdfGenerator-umbrella.h in Headers */,
 				02A715F575416DA6C866FA7871514370 /* MAGPdfRenderer.h in Headers */,
 				E20508A6449A697DC5C01B01EC6A9B7A /* UIColor+MAGPdfGenerator.h in Headers */,
-				8AA8123339839533CA7FA4D20DAC2BEF /* UIView+MAGPdfGenerator.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2513,7 +2506,6 @@
 				4A8443F262341D5DC047C195527D8F67 /* MAGPdfGenerator-dummy.m in Sources */,
 				E4B04A9F6D2E4EDB58C27C5DDC16AA70 /* MAGPdfRenderer.m in Sources */,
 				2B0259AD2F27194785D8511FA134D6D2 /* UIColor+MAGPdfGenerator.m in Sources */,
-				D1AD1349D2938C07F630163605854385 /* UIView+MAGPdfGenerator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
