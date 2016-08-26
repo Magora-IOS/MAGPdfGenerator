@@ -10,6 +10,7 @@
 static CGSize const _defaultPageSize = (CGSize){612, 792};
 static UIEdgeInsets const _defaultPageInsets = (UIEdgeInsets){39, 45, 39, 55}; // Default printable frame = {45, 39, 512, 714}
 static CGPoint const _defaultPointToDrawPageNumber = (CGPoint){580, 730};
+static CGFloat const _defaultPageNumberFontSize = 12;
 
 
 @interface MAGPdfRenderer ()
@@ -28,6 +29,7 @@ static CGPoint const _defaultPointToDrawPageNumber = (CGPoint){580, 730};
         _pageInsets = _defaultPageInsets;
         _printPageNumbers = NO;
         _pointToDrawPageNumber = _defaultPointToDrawPageNumber;
+        _pageNumberFont = [UIFont systemFontOfSize:_defaultPageNumberFontSize];
     }
     return self;
 }
@@ -174,9 +176,9 @@ static CGPoint const _defaultPointToDrawPageNumber = (CGPoint){580, 730};
 
 - (void)drawPageNumber {
     NSString *pageNumber = @(self.context.currentPageNumber.integerValue + 1).stringValue;
-    UIFont *font = [UIFont systemFontOfSize:12];
+
     NSDictionary *attributes = @{
-            NSFontAttributeName: font,
+            NSFontAttributeName: self.pageNumberFont,
         };
     [pageNumber drawAtPoint:self.pointToDrawPageNumber withAttributes:attributes];
 }

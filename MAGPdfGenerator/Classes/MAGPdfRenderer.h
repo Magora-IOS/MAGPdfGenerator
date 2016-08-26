@@ -18,6 +18,7 @@
 @property (nonatomic) UIEdgeInsets pageInsets; // Default value {39, 45, 39, 55} (default printable frame = {45, 39, 512, 714}). Note that each of the pages will contain the specified insets.
 @property (nonatomic) BOOL printPageNumbers; // Default value NO.
 @property (nonatomic) CGPoint pointToDrawPageNumber; // Default value {580, 730}. Set printPageNumbers to YES to be able to specify the point to draw the page number.
+@property (nonatomic) UIFont *pageNumberFont; // Default is systemFontOfSize:12.
 
 /**
  * Draws all labels and images from the view to the PDF document with the specified name.
