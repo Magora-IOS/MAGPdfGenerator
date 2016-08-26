@@ -22,7 +22,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                 <state key="normal" title="Generate PDF"/>
                                 <connections>
-                                    <action selector="generatePDFbuttonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jQo-u5-SzQ"/>
+                                    <action selector="generatePDFButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kDd-kl-4Su"/>
                                 </connections>
                             </button>
                         </subviews>

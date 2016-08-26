@@ -16,13 +16,15 @@
 
 #pragma mark - Actions
 
-- (IBAction)generatePDFbuttonTapped:(id)sender {
+- (IBAction)generatePDFButtonTapped:(id)sender {
     NSString *pdfName = @"myShinyPdf";
     self.pdfOrderView = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([PDFOrderView class]) owner:nil options:nil].firstObject;
     
     MAGPdfRenderer *renderer = [[MAGPdfRenderer alloc] init];
     renderer.delegate = self;
-    
+    renderer.pageInsets = (UIEdgeInsets){30, 20, 55, 20};
+    renderer.printPageNumbers = YES;
+
     NSURL *pdfURL = [renderer drawView:self.pdfOrderView inPDFwithFileName:pdfName];
     
     [self previewPDFDocumentWithURL:pdfURL];

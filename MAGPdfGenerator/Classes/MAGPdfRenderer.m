@@ -9,7 +9,7 @@
 
 static CGSize const _defaultPageSize = (CGSize){612, 792};
 static UIEdgeInsets const _defaultPageInsets = (UIEdgeInsets){39, 45, 39, 55}; // Default printable frame = {45, 39, 512, 714}
-static CGPoint const _defaultPageNumberPointToDraw = (CGPoint){580, 730};
+static CGPoint const _defaultPointToDrawPageNumber = (CGPoint){580, 730};
 
 
 @interface MAGPdfRenderer ()
@@ -18,6 +18,19 @@ static CGPoint const _defaultPageNumberPointToDraw = (CGPoint){580, 730};
 
 
 @implementation MAGPdfRenderer
+
+#pragma mark - Initialization
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _pageSize = _defaultPageSize;
+        _pageInsets = _defaultPageInsets;
+        _printPageNumbers = NO;
+        _pointToDrawPageNumber = _defaultPointToDrawPageNumber;
+    }
+    return self;
+}
 
 #pragma mark - Public methods
 
@@ -43,7 +56,7 @@ static CGPoint const _defaultPageNumberPointToDraw = (CGPoint){580, 730};
     [textToDraw drawInRect:frameRect withAttributes:attrs];
 }
 
-#pragma mark - Auxiliaries
+#pragma mark - Private methods
 
 - (NSURL *)setupPDFDocumentNamed:(NSString *)pdfName {
     NSString *extendedPdfName = [pdfName stringByAppendingPathExtension:@"pdf"];
@@ -57,12 +70,25 @@ static CGPoint const _defaultPageNumberPointToDraw = (CGPoint){580, 730};
 }
 
 - (void)drawViewInPDF {
-    [self.context.mainView setNeedsLayout];
-    [self.context.mainView layoutIfNeeded];
-    
+    [self checkPageWidthOverhead];
+    [self layoutView:self.context.mainView];
     [self beginNewPDFPage];
-    
     [self drawSubviewsOfView:self.context.mainView];
+}
+
+- (void)checkPageWidthOverhead {
+    CGFloat printableWidth = self.pageSize.width - self.pageInsets.left - self.pageInsets.right;
+    CGFloat mainViewWidth = self.context.mainView.frame.size.width;
+    BOOL overheadByX = mainViewWidth > printableWidth;
+    if (overheadByX) {
+        NSLog(@"Warning: The view has width which is more than printable width. The width should be less then or equal to %@ (pageSize.width{%@} - pageInsets.left{%@} - self.pageInsets.right{%@}) but currently is %@. The PDF document may be drawn incorrectly.",
+                @(printableWidth), @(self.pageSize.width), @(self.pageInsets.left), @(self.pageInsets.right), @(mainViewWidth));
+    }
+}
+
+- (void)layoutView:(UIView *)view {
+    [view setNeedsLayout];
+    [view layoutIfNeeded];
 }
 
 - (void)drawSubviewsOfView:(UIView *)view {
@@ -152,29 +178,28 @@ static CGPoint const _defaultPageNumberPointToDraw = (CGPoint){580, 730};
     NSDictionary *attributes = @{
             NSFontAttributeName: font,
         };
-    [pageNumber drawAtPoint:_defaultPageNumberPointToDraw withAttributes:attributes];
+    [pageNumber drawAtPoint:self.pointToDrawPageNumber withAttributes:attributes];
 }
 
 - (CGRect)rectForDrawViewWithNewPageAllocationIfNeeded:(UIView *)view {
     [self allocateNewPageIfNeededForView:view];
-    
+
     CGRect rectForDraw = [view convertRect:view.bounds toView:self.context.mainView];
-    CGFloat topInset = self.context.currentPageNumber.integerValue == 0 ? 0 : _defaultPageInsets.top;
-    rectForDraw.origin.y = rectForDraw.origin.y - self.context.currentPageTopY + topInset;
+    rectForDraw.origin.y = rectForDraw.origin.y - self.context.currentPageTopY + self.pageInsets.top;
+    rectForDraw.origin.x = rectForDraw.origin.x + self.pageInsets.left;
+    CGFloat overheadByX = CGRectGetMaxX(rectForDraw) - self.pageSize.width + self.pageInsets.right;
+    if (overheadByX > 0) {
+        rectForDraw.size.width = rectForDraw.size.width - overheadByX;
+    }
     
     return rectForDraw;
 }
 
 - (void)allocateNewPageIfNeededForView:(UIView *)view {
     CGRect viewFrameInMainView = [view convertRect:view.bounds toView:self.context.mainView];
-    
-    CGFloat topInset = self.context.currentPageNumber.integerValue == 0 ? 0 : _defaultPageInsets.top;
-    CGFloat printableHeight = _defaultPageSize.height - topInset - _defaultPageInsets.bottom;
-    
-    CGFloat viewLowestY = viewFrameInMainView.origin.y + viewFrameInMainView.size.height;
-    CGFloat overhead = viewLowestY - self.context.currentPageTopY - printableHeight;
-    
-    if (overhead > 0) {
+    CGFloat printableHeight = self.pageSize.height - self.pageInsets.top - self.pageInsets.bottom;
+    CGFloat overheadByY = CGRectGetMaxY(viewFrameInMainView) - self.context.currentPageTopY - printableHeight;
+    if (overheadByY > 0) {
         self.context.currentPageTopY = viewFrameInMainView.origin.y;
         [self beginNewPDFPage];
     }
@@ -187,8 +212,10 @@ static CGPoint const _defaultPageNumberPointToDraw = (CGPoint){580, 730};
     else {
         self.context.currentPageNumber = @(self.context.currentPageNumber.integerValue + 1);
     }
-    UIGraphicsBeginPDFPageWithInfo(CGRectMake(0, 0, _defaultPageSize.width, _defaultPageSize.height), nil);
-    [self drawPageNumber];
+    UIGraphicsBeginPDFPageWithInfo(CGRectMake(0, 0, self.pageSize.width, self.pageSize.height), nil);
+    if (self.printPageNumbers) {
+        [self drawPageNumber];
+    }
 }
 
 - (void)finishPDF {
