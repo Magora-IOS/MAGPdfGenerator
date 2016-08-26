@@ -55,12 +55,12 @@
 }
 
 - (void)configureOrderTableCells {
-    for (NSInteger i = 0; i < 123; i++) {
+    for (NSInteger i = 0; i < 35; i++) {
         PDFOrderTableCell *cell = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([PDFOrderTableCell class]) owner:nil options:nil].firstObject;
-        [cell setupWithProduct];
+        [cell setupWithRandomProduct];
         [self.stackView addSubview:cell withPrecedingMargin:0 sideMargin:0];
         if (i % 2 == 1) {
-            cell.backgroundColor = [UIColor colorWithRed:240./255 green:240./255 blue:240./255 alpha:1.0];
+            cell.backgroundColor = [UIColor colorWithRed:(CGFloat)(240. / 255) green:(CGFloat)(240. / 255) blue:(CGFloat)(240. / 255) alpha:1.0];
         }
     }
 }

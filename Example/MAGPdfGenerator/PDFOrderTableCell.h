@@ -3,6 +3,6 @@
 
 @interface PDFOrderTableCell : UIView
 
-- (void)setupWithProduct;
+- (void)setupWithRandomProduct;
 
 @end

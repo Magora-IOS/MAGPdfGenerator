@@ -20,7 +20,7 @@
                                 <constraint firstAttribute="width" constant="80" id="ea5-7O-UWO"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="9"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="l3l-q2-Wpf">
@@ -36,7 +36,7 @@
                                 <constraint firstAttribute="width" constant="80" id="SDc-4W-SIX"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="9"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                             <variation key="default">
                                 <mask key="constraints">
@@ -50,7 +50,7 @@
                                 <constraint firstAttribute="width" constant="15" id="UpB-Qu-roO"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="9"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PINK GOLD" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BjW-0h-5Sa" userLabel="Color Label">
@@ -59,7 +59,7 @@
                                 <constraint firstAttribute="width" constant="175" id="Pqw-2t-PdE"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="9"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="45M" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ee-UT-2gn" userLabel="Size Label">
@@ -68,7 +68,7 @@
                                 <constraint firstAttribute="width" constant="45" id="PMO-f7-D0o"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="9"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$211.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u89-gh-vXB" userLabel="Price Label">
@@ -77,7 +77,7 @@
                                 <constraint firstAttribute="width" constant="45" id="yqU-2g-BA3"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="9"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$633.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ky1-WA-gNe" userLabel="Exten Label">
@@ -86,13 +86,13 @@
                                 <constraint firstAttribute="width" constant="45" id="Zea-VO-cQf"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="9"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J6f-Zu-GaZ" userLabel="Comments Label">
                             <rect key="frame" x="453" y="0.0" width="97" height="0.0"/>
                             <fontDescription key="fontDescription" type="system" pointSize="9"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
@@ -137,6 +137,13 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="barcodeImageView" destination="l3l-q2-Wpf" id="Idy-kt-32q"/>
+                <outlet property="colorLabel" destination="BjW-0h-5Sa" id="3cx-Jc-Ihi"/>
+                <outlet property="commentsLabel" destination="J6f-Zu-GaZ" id="s2v-lI-VRs"/>
+                <outlet property="extenLabel" destination="ky1-WA-gNe" id="VRl-JS-PJ8"/>
+                <outlet property="priceLabel" destination="u89-gh-vXB" id="HSO-lC-rut"/>
+                <outlet property="quantityLabel" destination="W7v-FC-9em" id="sbw-sQ-GiY"/>
+                <outlet property="sizeLabel" destination="6ee-UT-2gn" id="Dej-y8-MDr"/>
+                <outlet property="styleLabel" destination="UgW-YX-EAP" id="UE3-PB-d8q"/>
                 <outlet property="upcLabel" destination="Fx2-Fc-hhW" id="zfO-P6-Qaw"/>
             </connections>
             <point key="canvasLocation" x="548" y="133.5"/>
