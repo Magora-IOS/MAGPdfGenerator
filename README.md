@@ -1,6 +1,6 @@
 # MAGPdfGenerator
 
-`MAGPdfGenerator` is an utility which provides the ability to convert UIView's representation to a PDF document. The UIView may be created from XIB file and use Autolayouts that makes a convenient way to draw the pdf's content.
+`MAGPdfGenerator` is an utility which provides the ability to convert UIView's representation to a PDF document. The UIView may be created from XIB file and use Autolayouts that makes a convenient way to draw the PDF's content. The PDF document will automatically be divided by pages so you can create a long table view and draw it in the PDF document without additional preparation. The generator can also automatically print page numbers in the bottom of each of the pages.
 
 ![](http://i.imgur.com/0fClxKb.png)
 
@@ -15,7 +15,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 ## Installation
 
 MAGPdfGenerator is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+it, simply add the following line to your Podfile and run `pod install`:
 
 ```ruby
 pod 'MAGPdfGenerator', :git => 'https://github.com/Magora-IOS/MAGPdfGenerator.git'
@@ -23,7 +23,7 @@ pod 'MAGPdfGenerator', :git => 'https://github.com/Magora-IOS/MAGPdfGenerator.gi
 
 ## Usage
 
-Before you can use the generator you should create an instance of UIView containing the layout for the future pdf document. The default pdf page size is {612, 792}, and the printable area has a size {580, 730}, so you should locate internal views in the size equal to the size of the printable area to avoid elements out of the page. You can use XIB file for that purposes and then instantiate the view with something like this: 
+Before you can use the generator you should create an instance of UIView containing the layout for the future PDF document. The default pdf page size is {612, 792}, and the printable area has a size {580, 730}, so you should locate internal views in the size equal to the size of the printable area to avoid elements out of the page. You can use XIB file for that purposes and then instantiate the view with something like this:
 ```ruby
 YourPdfViewClass *yourPdfViewInstance = [[NSBundle mainBundle] loadNibNamed:
     NSStringFromClass([YourPdfViewClass class]) owner:nil options:nil].firstObject;
