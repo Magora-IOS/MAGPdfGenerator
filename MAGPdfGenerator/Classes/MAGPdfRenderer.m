@@ -14,7 +14,7 @@ static CGFloat const _defaultPageNumberFontSize = 12;
 
 
 @interface MAGPdfRenderer ()
-@property (nonatomic, readwrite) MAGDrawContext *context;
+@property (nonatomic) MAGDrawContext *context;
 @end
 
 
@@ -37,13 +37,15 @@ static CGFloat const _defaultPageNumberFontSize = 12;
 #pragma mark - Public methods
 
 - (NSURL *)drawView:(UIView *)view inPDFwithFileName:(NSString *)pdfName {
-    self.context = [[MAGDrawContext alloc] initWithMainView:view noWrapViews:[self.delegate noWrapViewsForPdfRenderer:self]];
-    
-    NSURL *pdfURL = [self setupPDFDocumentNamed:pdfName];
-    [self drawViewInPDF];
-    [self finishPDF];
-    
-    return pdfURL;
+    @synchronized (self) {
+        self.context = [self contextForNewDrawingWithView:view];
+
+        NSURL *pdfURL = [self setupPDFDocumentNamed:pdfName];
+        [self drawViewInPDF];
+        [self finishPDF];
+
+        return pdfURL;
+    }
 }
 
 + (void)drawImage:(UIImage *)image inRect:(CGRect)rect {
@@ -59,6 +61,17 @@ static CGFloat const _defaultPageNumberFontSize = 12;
 }
 
 #pragma mark - Private methods
+
+- (MAGDrawContext *)contextForNewDrawingWithView:(UIView *)view {
+    MAGDrawContext *context = [[MAGDrawContext alloc] initWithMainView:view noWrapViews:[self.delegate noWrapViewsForPdfRenderer:self]];
+    context.pageSize = self.pageSize;
+    context.pageInsets = self.pageInsets;
+    context.printPageNumbers = self.printPageNumbers;
+    context.pointToDrawPageNumber = self.pointToDrawPageNumber;
+    context.pageNumberFont = self.pageNumberFont;
+
+    return context;
+}
 
 - (NSURL *)setupPDFDocumentNamed:(NSString *)pdfName {
     NSString *extendedPdfName = [pdfName stringByAppendingPathExtension:@"pdf"];
@@ -79,18 +92,27 @@ static CGFloat const _defaultPageNumberFontSize = 12;
 }
 
 - (void)checkPageWidthOverhead {
-    CGFloat printableWidth = self.pageSize.width - self.pageInsets.left - self.pageInsets.right;
+    CGFloat printableWidth = self.context.pageSize.width - self.context.pageInsets.left - self.context.pageInsets.right;
     CGFloat mainViewWidth = self.context.mainView.frame.size.width;
     BOOL overheadByX = mainViewWidth > printableWidth;
     if (overheadByX) {
         NSLog(@"Warning: The view has width which is more than printable width. The width should be less then or equal to %@ (pageSize.width{%@} - pageInsets.left{%@} - self.pageInsets.right{%@}) but currently is %@. The PDF document may be drawn incorrectly.",
-                @(printableWidth), @(self.pageSize.width), @(self.pageInsets.left), @(self.pageInsets.right), @(mainViewWidth));
+                @(printableWidth), @(self.context.pageSize.width), @(self.context.pageInsets.left), @(self.context.pageInsets.right), @(mainViewWidth));
     }
 }
 
-- (void)layoutView:(UIView *)view {
-    [view setNeedsLayout];
-    [view layoutIfNeeded];
+- (void)layoutView:(UIView *)view { // TODO: refactor
+    void (^layoutBlock)() = ^void() {
+            [view setNeedsLayout];
+            [view layoutIfNeeded];
+        };
+
+    if ([NSThread isMainThread]) {
+        layoutBlock();
+    }
+    else {
+        dispatch_sync(dispatch_get_main_queue(), layoutBlock);
+    }
 }
 
 - (void)drawSubviewsOfView:(UIView *)view {
@@ -178,18 +200,18 @@ static CGFloat const _defaultPageNumberFontSize = 12;
     NSString *pageNumber = @(self.context.currentPageNumber.integerValue + 1).stringValue;
 
     NSDictionary *attributes = @{
-            NSFontAttributeName: self.pageNumberFont,
+            NSFontAttributeName: self.context.pageNumberFont,
         };
-    [pageNumber drawAtPoint:self.pointToDrawPageNumber withAttributes:attributes];
+    [pageNumber drawAtPoint:self.context.pointToDrawPageNumber withAttributes:attributes];
 }
 
 - (CGRect)rectForDrawViewWithNewPageAllocationIfNeeded:(UIView *)view {
     [self allocateNewPageIfNeededForView:view];
 
     CGRect rectForDraw = [view convertRect:view.bounds toView:self.context.mainView];
-    rectForDraw.origin.y = rectForDraw.origin.y - self.context.currentPageTopY + self.pageInsets.top;
-    rectForDraw.origin.x = rectForDraw.origin.x + self.pageInsets.left;
-    CGFloat overheadByX = CGRectGetMaxX(rectForDraw) - self.pageSize.width + self.pageInsets.right;
+    rectForDraw.origin.y = rectForDraw.origin.y - self.context.currentPageTopY + self.context.pageInsets.top;
+    rectForDraw.origin.x = rectForDraw.origin.x + self.context.pageInsets.left;
+    CGFloat overheadByX = CGRectGetMaxX(rectForDraw) - self.context.pageSize.width + self.context.pageInsets.right;
     if (overheadByX > 0) {
         rectForDraw.size.width = rectForDraw.size.width - overheadByX;
     }
@@ -199,7 +221,7 @@ static CGFloat const _defaultPageNumberFontSize = 12;
 
 - (void)allocateNewPageIfNeededForView:(UIView *)view {
     CGRect viewFrameInMainView = [view convertRect:view.bounds toView:self.context.mainView];
-    CGFloat printableHeight = self.pageSize.height - self.pageInsets.top - self.pageInsets.bottom;
+    CGFloat printableHeight = self.context.pageSize.height - self.context.pageInsets.top - self.context.pageInsets.bottom;
     CGFloat overheadByY = CGRectGetMaxY(viewFrameInMainView) - self.context.currentPageTopY - printableHeight;
     if (overheadByY > 0) {
         self.context.currentPageTopY = viewFrameInMainView.origin.y;
@@ -214,8 +236,8 @@ static CGFloat const _defaultPageNumberFontSize = 12;
     else {
         self.context.currentPageNumber = @(self.context.currentPageNumber.integerValue + 1);
     }
-    UIGraphicsBeginPDFPageWithInfo(CGRectMake(0, 0, self.pageSize.width, self.pageSize.height), nil);
-    if (self.printPageNumbers) {
+    UIGraphicsBeginPDFPageWithInfo(CGRectMake(0, 0, self.context.pageSize.width, self.context.pageSize.height), nil);
+    if (self.context.printPageNumbers) {
         [self drawPageNumber];
     }
 }
