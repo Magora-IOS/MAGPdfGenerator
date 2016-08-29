@@ -2,7 +2,7 @@
 
 `MAGPdfGenerator` is an utility which provides the ability to convert UIView's representation to a PDF document. The UIView may be created from XIB file and use Autolayouts that makes a convenient way to draw the PDF's content. The PDF document will automatically be divided by pages so you can create a long table view and draw it in the PDF document without additional preparation. The generator can also automatically print page numbers in the bottom of each of the pages.
 
-![](http://i.imgur.com/0fClxKb.png)
+![](http://i.imgur.com/YRjvBwf.png)
 
 ## Example
 
@@ -18,7 +18,7 @@ MAGPdfGenerator is available through [CocoaPods](http://cocoapods.org). To insta
 it, simply add the following line to your Podfile and run `pod install`:
 
 ```ruby
-pod 'MAGPdfGenerator', :git => 'https://github.com/Magora-IOS/MAGPdfGenerator.git'
+pod 'MAGPdfGenerator'
 ```
 
 ## Usage
