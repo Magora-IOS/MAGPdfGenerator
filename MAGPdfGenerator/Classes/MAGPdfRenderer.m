@@ -5,7 +5,7 @@
 
 // Utils
 #import "UIColor+MAGPdfGenerator.h"
-
+#import <AVFoundation/AVFoundation.h>
 
 static CGSize const _defaultPageSize = (CGSize){612, 792};
 static UIEdgeInsets const _defaultPageInsets = (UIEdgeInsets){39, 45, 39, 55}; // Default printable frame = {45, 39, 512, 714}
@@ -49,7 +49,7 @@ static CGFloat const _defaultPageNumberFontSize = 12;
 }
 
 + (void)drawImage:(UIImage *)image inRect:(CGRect)rect {
-    [image drawInRect:rect];
+    [image drawInRect:AVMakeRectWithAspectRatioInsideRect(CGSizeMake(image.size.width, image.size.height),rect)];
 }
 
 + (void)drawText:(NSString *)textToDraw inFrame:(CGRect)frameRect {
@@ -184,7 +184,12 @@ static CGFloat const _defaultPageNumberFontSize = 12;
     NSDictionary<NSString *, id> *attributes = label.attributedText.length > 0 ? [label.attributedText attributesAtIndex:0 effectiveRange:nil] : nil;
     CGRect rectForDraw = [self rectForDrawViewWithNewPageAllocationIfNeeded:label];
     
-    [MAGPdfRenderer drawText:label.text inFrame:rectForDraw withAttributes:attributes];
+    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    style.alignment = label.textAlignment;
+    NSMutableDictionary *attrsDict = [NSMutableDictionary dictionaryWithDictionary:attributes];
+    [attrsDict setObject:style forKey:NSParagraphStyleAttributeName];
+    
+    [MAGPdfRenderer drawText:label.text inFrame:rectForDraw withAttributes:attrsDict];
 }
 
 - (void)drawImageView:(UIImageView *)imageView {
