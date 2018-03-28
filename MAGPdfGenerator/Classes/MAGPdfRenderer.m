@@ -5,9 +5,9 @@
 
 // Utils
 #import "UIColor+MAGPdfGenerator.h"
-#import <AVFoundation/AVFoundation.h>
 
-static CGSize const _defaultPageSize = (CGSize){612, 792};
+//default page size should not include margin area.  100 pixels resevered for left/right margins
+static CGSize const _defaultPageSize = (CGSize){512, 792};
 static UIEdgeInsets const _defaultPageInsets = (UIEdgeInsets){39, 45, 39, 55}; // Default printable frame = {45, 39, 512, 714}
 static CGPoint const _defaultPointToDrawPageNumber = (CGPoint){580, 730};
 static CGFloat const _defaultPageNumberFontSize = 12;
@@ -39,17 +39,17 @@ static CGFloat const _defaultPageNumberFontSize = 12;
 - (NSURL *)drawView:(UIView *)view inPDFwithFileName:(NSString *)pdfName {
     @synchronized (self) {
         self.context = [self contextForNewDrawingWithView:view];
-
+        
         NSURL *pdfURL = [self setupPDFDocumentNamed:pdfName];
         [self drawViewInPDF];
         [self finishPDF];
-
+        
         return pdfURL;
     }
 }
 
 + (void)drawImage:(UIImage *)image inRect:(CGRect)rect {
-    [image drawInRect:AVMakeRectWithAspectRatioInsideRect(CGSizeMake(image.size.width, image.size.height),rect)];
+    [image drawInRect:rect];
 }
 
 + (void)drawText:(NSString *)textToDraw inFrame:(CGRect)frameRect {
@@ -69,7 +69,7 @@ static CGFloat const _defaultPageNumberFontSize = 12;
     context.printPageNumbers = self.printPageNumbers;
     context.pointToDrawPageNumber = self.pointToDrawPageNumber;
     context.pageNumberFont = self.pageNumberFont;
-
+    
     return context;
 }
 
@@ -97,16 +97,16 @@ static CGFloat const _defaultPageNumberFontSize = 12;
     BOOL overheadByX = mainViewWidth > printableWidth;
     if (overheadByX) {
         NSLog(@"Warning: The view has width which is more than printable width. The width should be less then or equal to %@ (pageSize.width{%@} - pageInsets.left{%@} - self.pageInsets.right{%@}) but currently is %@. The PDF document may be drawn incorrectly.",
-                @(printableWidth), @(self.context.pageSize.width), @(self.context.pageInsets.left), @(self.context.pageInsets.right), @(mainViewWidth));
+              @(printableWidth), @(self.context.pageSize.width), @(self.context.pageInsets.left), @(self.context.pageInsets.right), @(mainViewWidth));
     }
 }
 
 - (void)layoutView:(UIView *)view { // TODO: refactor
     void (^layoutBlock)() = ^void() {
-            [view setNeedsLayout];
-            [view layoutIfNeeded];
-        };
-
+        [view setNeedsLayout];
+        [view layoutIfNeeded];
+    };
+    
     if ([NSThread isMainThread]) {
         layoutBlock();
     }
@@ -184,12 +184,32 @@ static CGFloat const _defaultPageNumberFontSize = 12;
     NSDictionary<NSString *, id> *attributes = label.attributedText.length > 0 ? [label.attributedText attributesAtIndex:0 effectiveRange:nil] : nil;
     CGRect rectForDraw = [self rectForDrawViewWithNewPageAllocationIfNeeded:label];
     
-    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    style.alignment = label.textAlignment;
-    NSMutableDictionary *attrsDict = [NSMutableDictionary dictionaryWithDictionary:attributes];
-    [attrsDict setObject:style forKey:NSParagraphStyleAttributeName];
+    CGRect renderRect = [self adjustToVerticalAlignText:rectForDraw originalLabel:label];
     
-    [MAGPdfRenderer drawText:label.text inFrame:rectForDraw withAttributes:attrsDict];
+    [MAGPdfRenderer drawText:label.text inFrame:renderRect withAttributes:attributes];
+}
+
+/**
+ *  Recalculate the rendering area to be vertically centered in the label's frame.
+ */
+- (CGRect)adjustToVerticalAlignText:(CGRect)renderRect originalLabel:(UILabel*)label
+{
+    CGSize constraint = CGSizeMake(renderRect.size.width, CGFLOAT_MAX);
+    CGSize size;
+    
+    NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
+    CGSize boundingBox = [label.text boundingRectWithSize:constraint
+                                                  options:NSStringDrawingUsesLineFragmentOrigin
+                                               attributes:@{NSFontAttributeName:label.font}
+                                                  context:context].size;
+    
+    size = CGSizeMake(ceil(boundingBox.width), ceil(boundingBox.height));
+    
+    CGFloat textHeight = size.height;
+    
+    CGFloat adjustedY = renderRect.origin.y + ((renderRect.size.height - textHeight)/2.0);
+    
+    return CGRectMake(renderRect.origin.x, adjustedY, renderRect.size.width, textHeight);
 }
 
 - (void)drawImageView:(UIImageView *)imageView {
@@ -203,22 +223,23 @@ static CGFloat const _defaultPageNumberFontSize = 12;
 
 - (void)drawPageNumber {
     NSString *pageNumber = @(self.context.currentPageNumber.integerValue + 1).stringValue;
-
+    
     NSDictionary *attributes = @{
-            NSFontAttributeName: self.context.pageNumberFont,
-        };
+                                 NSFontAttributeName: self.context.pageNumberFont,
+                                 };
     [pageNumber drawAtPoint:self.context.pointToDrawPageNumber withAttributes:attributes];
 }
 
 - (CGRect)rectForDrawViewWithNewPageAllocationIfNeeded:(UIView *)view {
     [self allocateNewPageIfNeededForView:view];
-
+    
     CGRect rectForDraw = [view convertRect:view.bounds toView:self.context.mainView];
     rectForDraw.origin.y = rectForDraw.origin.y - self.context.currentPageTopY + self.context.pageInsets.top;
-    rectForDraw.origin.x = rectForDraw.origin.x + self.context.pageInsets.left;
-    CGFloat overheadByX = CGRectGetMaxX(rectForDraw) - self.context.pageSize.width + self.context.pageInsets.right;
-    if (overheadByX > 0) {
-        rectForDraw.size.width = rectForDraw.size.width - overheadByX;
+    
+    //overflow should not take margins into account as the screen size does not.
+    CGFloat overFlowX = CGRectGetMaxX(rectForDraw) - self.context.pageSize.width;
+    if (overFlowX > 0) {
+        rectForDraw.size.width = rectForDraw.size.width - overFlowX;
     }
     
     return rectForDraw;
@@ -253,3 +274,4 @@ static CGFloat const _defaultPageNumberFontSize = 12;
 }
 
 @end
+
